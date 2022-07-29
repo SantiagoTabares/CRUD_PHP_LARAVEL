@@ -46,7 +46,7 @@ class EmpleadoController extends Controller
             'ApellidoPaterno'=>'required|string|max:100',
             'ApellidoMaterno'=>'required|string|max:100',
             'Correo'=>'required|email|',
-            'Foto'=>'required|max:10000|nimes:jpeg,png,jpg'
+            'Foto'=>'required|max:10000'
         ];
 
         $mensajeError=[
@@ -117,7 +117,7 @@ class EmpleadoController extends Controller
         ];
 
         if($request->hasFile('Foto')){ //valida si la foto existe
-             $camposVal = ['Foto'=>'required|max:10000|nimes:jpeg,png,jpg'];
+             $camposVal = ['Foto'=>'required|max:10000'];
              $mensajeError = ['Foto.required'=>'La foto es requerida'];
         }
 
@@ -133,7 +133,8 @@ class EmpleadoController extends Controller
         Empleado::where('id', '=', $id)->update($datosEmpleado);//actualizo datos
 
         $empleado = Empleado::findOrfail($id); //recuperar id
-        return view('empleados.edit',compact('empleado'));//enviar formulario datos actualizados
+        //return view('empleados.edit',compact('empleado'));//enviar formulario datos actualizados
+        return redirect('empleado')->with('mensaje','Empleado modificado con éxito');
     }
 
     /**
