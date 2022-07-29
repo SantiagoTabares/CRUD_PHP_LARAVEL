@@ -6,7 +6,9 @@
 {{Session::get('mensaje')}}        
 @endif
 
-<a href="{{url('empleado/create')}}">Registrar nuevo empleado</a>
+<a href="{{url('empleado/create')}}" class="btn btn-success ">Registrar nuevo empleado</a>
+<br>
+<br>
 
 <table class="table table-light">
     <thead class="thead-light">
@@ -26,7 +28,7 @@
             <td>
                 <th>{{$empleado ->id}}</th>
                 <th>
-                <img src="{{asset('storage').'/'.$empleado->Foto}}" width="100" alt="">
+                <img src="{{asset('storage').'/'.$empleado->Foto}}" width="100" alt="" class="img-thumbnail img-fluid">
                 {{-- {{$empleado ->Foto}} --}}
                 </th>
                 
@@ -36,14 +38,14 @@
                 <th>{{$empleado ->Correo}}</th>
                 <th>
                     
-                <a href="{{url('/empleado/'.$empleado->id.'/edit')}}">
+                <a href="{{url('/empleado/'.$empleado->id.'/edit')}}" class="btn btn-warning">
                     Editar
                 </a>
                  |
-                <form action="{{url('/empleado/'.$empleado->id)}}" method="post">
+                <form action="{{url('/empleado/'.$empleado->id)}}" method="post" class="d-inline">
                 @csrf
                 {{method_field('DELETE')}}
-                <input type="submit" onclick="return confirm('¿Quieres borrar?')" value="Borrar">
+                <input type="submit" onclick="return confirm('¿Quieres borrar?')" value="Borrar" class="btn btn-danger">
                 </form>
                 </th>
             </td>
