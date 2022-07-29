@@ -6,6 +6,7 @@ use App\Models\Empleado;
 use Illuminate\Http\Request;
 use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Auth\Events\Validated;
 
 class EmpleadoController extends Controller
 {
@@ -103,6 +104,25 @@ class EmpleadoController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $camposVal=[
+            'Nombre'=>'required|string|max:100',
+            'ApellidoPaterno'=>'required|string|max:100',
+            'ApellidoMaterno'=>'required|string|max:100',
+            'Correo'=>'required|email|'
+        ];
+
+        $mensajeError=[
+            'required'=>'El :attribute es requerido',
+            
+        ];
+
+        if($request->hasFile('Foto')){ //valida si la foto existe
+             $camposVal = ['Foto'=>'required|max:10000|nimes:jpeg,png,jpg'];
+             $mensajeError = ['Foto.required'=>'La foto es requerida'];
+        }
+
+        $this->validate($request, $camposVal,$mensajeError);
+
         $datosEmpleado = request()->except(['_token','_method']);
         if($request->hasFile('Foto')){
             $empleado = Empleado::findOrfail($id); //recuperar id
